@@ -1,0 +1,9 @@
+import Link from 'next/link';
+import { ArrowUpRight, CheckCircle2, Clock3, Plus, TrendingUp, Workflow } from 'lucide-react';
+import AppShell from '../components/AppShell';
+import { useWorkflowStore } from '../store/workflowStore';
+
+export default function Dashboard() {
+  const workflows = useWorkflowStore((state) => state.workflows);
+  return <AppShell><main className="dashboard-page"><div className="page-heading"><div><p className="eyebrow">Sunday, August 23, 2026</p><h1>Good morning, Alex.</h1><p className="muted">Here is what is moving through your operation today.</p></div><Link className="primary-button" href="/workflows/builder"><Plus size={17} /> New workflow</Link></div><div className="metrics"><div><span>Active workflows</span><strong>{workflows.filter((item) => item.status === 'active').length}</strong><small><TrendingUp size={13} /> +2 this month</small></div><div><span>Successful runs</span><strong>96.8%</strong><small><CheckCircle2 size={13} /> 1,284 completed</small></div><div><span>Time saved</span><strong>42.6h</strong><small><Clock3 size={13} /> across all workflows</small></div></div><div className="section-heading"><h2>Recent workflows</h2><Link href="/workflows">View all <ArrowUpRight size={14} /></Link></div><div className="workflow-list">{workflows.map((workflow) => <Link className="workflow-row" href={`/workflows/${workflow.id}`} key={workflow.id}><span className="workflow-icon"><Workflow size={18} /></span><div className="workflow-name"><strong>{workflow.name}</strong><small>{workflow.description}</small></div><span className={`status ${workflow.status}`}>{workflow.status}</span><span className="row-stat">{workflow.runs} runs</span><span className="row-stat success">{workflow.success}% success</span><span className="updated">{workflow.updated}</span><ArrowUpRight size={16} /></Link>)}</div></main></AppShell>;
+}
