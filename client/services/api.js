@@ -13,4 +13,6 @@ api.interceptors.request.use((config) => {
 
 export const register = (payload) => api.post('/auth/register', payload);
 export const login = (payload) => api.post('/auth/login', payload);
+export const createWorkflow = (payload) => api.post('/workflows', payload);
+export const generateWorkflow = (payload) => api.post('/workflows/generate', payload);
 export default api;
